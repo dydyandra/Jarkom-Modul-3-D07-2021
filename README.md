@@ -395,5 +395,6 @@ Sedangkan, Zoro yang sangat bersemangat untuk mencari harta karun, sehingga kece
 ### Jawab
     
 ## <a name="kendala"></a> Kendala yang Dialami
+   - Terkendala dalam menjawab soal 12-13 akan tetapi teratasi setelah membaca beberapa dokumentasi. 
 
 ## <a name="referensi"></a> Referensi
