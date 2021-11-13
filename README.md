@@ -557,7 +557,47 @@ Terakhir, jalankan command `a2ensite super.franky.d07.com` dan restart dengan co
 Saatnya berlayar! Luffy dan Zoro akhirnya memutuskan untuk berlayar untuk mencari harta karun di super.franky.yyy.com. Tugas pencarian dibagi menjadi dua misi, Luffy bertugas untuk mendapatkan gambar (.png, .jpg), sedangkan Zoro mendapatkan sisanya. Karena Luffy orangnya sangat teliti untuk mencari harta karun, ketika ia berhasil mendapatkan gambar, ia mendapatkan gambar dan melihatnya dengan kecepatan 10 kbps
 
 ### Jawab
-    
+#### Pada Water7
+Buat file `acl-bandwidth.conf` pada folder `/etc/squid/`
+```
+   vi /etc/squid/acl-bandwidth.conf
+```
+
+Kemudian, isi dengan command berikut:
+```
+   acl download url_regex -i \. (png|jpg)$
+   
+   delay_pools 2
+   
+   delay_class 1 1
+   delay_parameters 1 1250/1250
+   delay_access 1 allow download
+   delay_access 1 deny all
+```
+   
+<img src="screenshots/12-1.PNG" width="700">
+
+Edit file `/etc/squid/squid.conf` dan tambahkan command berikut:
+```
+   include /etc/squid/acl-bandwidth.conf
+```
+   
+<img src="screenshots/12-2.PNG" width="700">
+ 
+Jalankan command `service squid restart`.
+
+#### Pada Loguetown
+1. Periksa apakah proxy sudah terpasang dengan command `env | grep -1 proxy`
+2. Jika belum, maka proxy bisa dipasang dengan command `export http_proxy=http://192.195.2.3:5000`
+3. Jalankan perintah `lynx google.com` maka server akan diarahkan untuk menggunakan `www.super.franky.d07.com`
+4. Input username dengan `luffybelikapald07` dan password `luffy_d07`
+5. User akan diarahkan ke tampilan `www.super.franky.d07.com`
+6. Masuk ke directory `public` lalu pilih directory `images`
+   <img src="screenshots/12-3.PNG" width="700">
+7. Untuk melakukan test kecepatan download Luffy, pilih salah satu file bertipe `jpg/png` > Enter > Ketik `D` pada keyboard untuk memulai proses download
+8. Untuk output kecepatan download Luffy, dapat dilihat sebagai berikut:
+   <img src="screenshots/12-4.PNG" width="700">
+   
 ## <a name="soal13"></a> Soal 13
 Sedangkan, Zoro yang sangat bersemangat untuk mencari harta karun, sehingga kecepatan kapal Zoro tidak dibatasi ketika sudah mendapatkan harta yang diinginkannya.
     
