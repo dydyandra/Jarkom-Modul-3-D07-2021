@@ -383,6 +383,137 @@ Transaksi jual beli tidak dilakukan setiap hari, oleh karena itu akses internet 
 Agar transaksi bisa lebih fokus berjalan, maka dilakukan redirect website agar mudah mengingat website transaksi jual beli kapal. Setiap mengakses google.com, akan diredirect menuju super.franky.yyy.com dengan website yang sama pada soal shift modul 2. Web server super.franky.yyy.com berada pada node Skypie.
 
 ### Jawab
+#### Pada EniesLobby
+Edit file `/etc/bind/named.conf.local` menjadi seperti berikut:
+```
+   zone "super.franky.d07.com" {
+      type master;
+      file "/etc/bind/sunnygo/super.franky.d07.com";
+   };
+   
+   zone "3.195.192.in-addr.arpa" {
+      type master;
+      file "/etc/bind/sunnygo/3.195.192.in-addr.arpa";
+   };
+```
+<img src="screenshots/11-1.PNG" width="700">
+
+Kemudian, buat filder sunnygo dengan command `mkdir /etc/bind/sunnygo`. Setelah itu, jalankan command berikut:
+```
+   cp /etc/bind/db.local /etc/bind/sunnygo/super.franky.D07.com
+```
+
+Lalu, edit file `/etc/bind/sunnygo/super.franky.D07.com` menjadi seperti berikut:
+```
+   $TTL    604800
+   @       IN      SOA     super.franky.d07.com. root.super.franky.d07.com. (
+                                   2         ; Serial
+                               604800         ; Refresh
+                               86400         ; Retry
+                               2419200         ; Expire
+                               604800 )       ; Negative Cache TTL
+   ;
+   @       IN      NS      super.franky.d07.com.
+   @       IN      A       192.195.3.69 ; IP Skypie
+   www     IN      CNAME   super.franky.d07.com.
+```
+
+<img src="screenshots/11-2.PNG" width="700">
+
+Kemudian, jalankan command berikut:
+```
+   cp /etc/bind/db.local /etc/bind/sunnygo/3.195.192.in-addr.arpa
+```
+Dan edit file `/etc/bind/sunnygo/3.195.192.in-addr.arpa`
+```
+   $TTL    604800
+   @       IN      SOA     super.franky.d07.com. root.super.franky.d07.com. (
+                                   2         ; Serial
+                               604800         ; Refresh
+                               86400         ; Retry
+                               2419200         ; Expire
+                               604800 )       ; Negative Cache TTL
+   ;
+   3.195.192.in-addr.arpa.      IN      NS      super.franky.d07.com.
+   69       IN      PTR       super.franky.d07.com.
+ ```
+   
+   Restart dengan `service bind9 restart`.
+   
+#### Pada Skypie
+Install apache2, php, libapache2-mod-php7, wget dan unzip.
+```
+   apt-get update
+   apt-get install apache2
+   apt-get install php
+   apt-get install libapache2-mod-php7.0
+   apt-get install wget
+   apt-get install unzip
+```
+   
+Selanjutnya, jalankan command berikut untuk mendowload file zip.
+```
+   wget https://raw.githubusercontent.com/FeinardSlim/Praktikum-Modul-2-Jarkom/mai/super.franky.zip
+unzip super.franky.zip
+```
+   
+Pindah ke directory `/etc/apache2/sites-available` kemudian copy file `000-default.conf` ke `super.franky.D07.com.conf`.
+```
+   cd /etc/apache2/sites-available
+   cp 000-default.conf super.franky.d07.com.conf
+```
+
+Setting file `super.franky.d07.com.conf` dan ganti isinya menjadi:
+```
+   ServerAdmin webmaster@localhost
+   #DocumentRoot /var/www/html
+   ServerName super.franky.d07.com
+   ServerAlias www.super.franky.d07.com
+   DocumentRoot /var/www/super.franky.d07.com
+```
+
+<img src="screenshots/11-3.PNG" width="700">
+   
+Buat directory baru dengan nama `super.franky.d07.com` pada `/var/www/` dengan command:
+```
+   mkdir /var/www/super.franky.d07.com
+```
+   
+Kemudian, jalankan command berikut:
+```
+   cp -r /root/super.franky/error /var/www/super.franky.d07.com
+   cp -r /root/super.franky/public /var/www/super.franky.d07.com
+```
+
+<img src="screenshots/11-4.PNG" width="700">
+
+#### Pada Water7
+Edit file `/etc/squid/squid.conf` menjadi:
+```
+   include /etc/squid/acl.conf
+   include /etc/squid/acl-bandwidth.conf
+   
+   http_port 5000
+   visible_hostname jualbelikapal.d07.com
+   
+   auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/passwd
+   auth_param basic children 5
+   auth_param basic realm Login
+   auth_param basic credentialsttl 2 hours
+   auth_param basic casesensitive on
+   acl USERS proxy_auth REQUIRED
+   acl google dstdomain google.com
+   http_access deny google
+   deny_info http://super.franky.d07.com/ google
+   http_access allow USERS AVAILABLE
+   http_access deny all
+```
+
+Kemudian, edit file `/etc/resolv.conf` menjadi `nameserver 192.195.2.2` dan jalankan command `service squid restart`.
+   
+<img src="screenshots/11-5.PNG" width="700">
+
+Terakhir, jalankan command `a2ensite super.franky.d07.com` dan restart dengan command `service apache2 restart`.
     
 ## <a name="soal12"></a> Soal 12
 Saatnya berlayar! Luffy dan Zoro akhirnya memutuskan untuk berlayar untuk mencari harta karun di super.franky.yyy.com. Tugas pencarian dibagi menjadi dua misi, Luffy bertugas untuk mendapatkan gambar (.png, .jpg), sedangkan Zoro mendapatkan sisanya. Karena Luffy orangnya sangat teliti untuk mencari harta karun, ketika ia berhasil mendapatkan gambar, ia mendapatkan gambar dan melihatnya dengan kecepatan 10 kbps
