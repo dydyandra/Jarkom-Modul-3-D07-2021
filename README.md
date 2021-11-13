@@ -378,6 +378,44 @@ Jalankan command `service squid restart`.
 Transaksi jual beli tidak dilakukan setiap hari, oleh karena itu akses internet dibatasi hanya dapat diakses setiap hari Senin-Kamis pukul 07.00-11.00 dan setiap hari Selasa-Jum’at pukul 17.00-03.00 keesokan harinya (sampai Sabtu pukul 03.00)
 
 ### Jawab
+   
+#### Water7
+   
+Menjalankan `vi /etc/squid/acl.conf` untuk memodifikasi file tersebut untuk ditambahkan:
+```bash
+acl AVAILABLE time M T W H 07:00-11:00
+acl AVAILABLE time T W H F 17:00-23:59
+acl AVAILABLE time W H F A 00:00-03:00
+```
+   <image src="screenshots/10-1.PNG" width="700">
+   
+Setelah itu edit file `/etc/squid/squid.conf` :
+```bash
+    include /etc/squid/acl.conf
+
+    http_port 5000
+    visible_hostname jualbelikapal.d07.com
+
+    auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/passwd
+    auth_param basic children 5
+    auth_param basic realm Login
+    auth_param basic credentialsttl 2 hours
+    auth_param basic casesensitive on
+    acl USERS proxy_auth REQUIRED
+    http_access allow USERS AVAILABLE
+    http_access deny all
+```
+<image src="screenshots/10-2.PNG" width="700">
+   
+Kemudian jalankan command `service squid restart`.
+
+#### Testing
+Apabila waktu saat mengakses sebuah website tidak sesuai dengan jam pada file `acl.conf` maka akan terjadi error dan access akan di-deny. 
+
+<image src="screenshots/8-4.PNG" width="700">
+
+Apabila waktu sesuai dengan jam maka halaman akan terbuka sesuai dengan website yang ingin dituju. Contoh: saat mengakses halaman its.ac.id.
+<image src="screenshots/10-3.PNG" width="700">
     
 ## <a name="soal11"></a> Soal 11
 Agar transaksi bisa lebih fokus berjalan, maka dilakukan redirect website agar mudah mengingat website transaksi jual beli kapal. Setiap mengakses google.com, akan diredirect menuju super.franky.yyy.com dengan website yang sama pada soal shift modul 2. Web server super.franky.yyy.com berada pada node Skypie.
