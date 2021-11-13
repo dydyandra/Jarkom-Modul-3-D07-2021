@@ -351,6 +351,28 @@ Agar transaksi jual beli lebih aman dan pengguna website ada dua orang, proxy di
     
 ### Jawab
 
+#### Pada Water7
+Restart squid pada node Water7 kemudian jalankan command berikut:
+```
+   htpasswd -c /etc/squid/passwd luffybelikapald07
+```
+Command `-c` digunakan untuk membuat file baru dan untuk MD5 sendiri sudah merupakan default. Setelah itu, input password `luffy_d07`. Selanjutnya, jalankan command berikut:
+```
+   htpasswd /etc/squid/passwd zorobelikapald07
+```
+Lalu, input password `zoro_d07`. Edit file `/etc/squid/squid.conf` menjadi seperti berikut:
+```
+   auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/passwd
+   auth_param basic children 5
+   auth_param basic realm Proxy
+   auth_param basic credentialsttl 2 hours
+   auth_param basic casesensitive on
+   acl USERS proxy_auth REQUIRED
+   http_access allow USERS
+   service squid restart
+```
+   
+Jalankan command `service squid restart`.
 
 ## <a name="soal10"></a> Soal 10
 Transaksi jual beli tidak dilakukan setiap hari, oleh karena itu akses internet dibatasi hanya dapat diakses setiap hari Senin-Kamis pukul 07.00-11.00 dan setiap hari Selasa-Jum’at pukul 17.00-03.00 keesokan harinya (sampai Sabtu pukul 03.00)
