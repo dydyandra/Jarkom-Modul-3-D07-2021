@@ -12,30 +12,33 @@ Daanii Nabil Ghinannafsi Kusnanta | 05111940000163 |
 
 
 ## Daftar Isi
-* [no. 1](#no-1)
-* [no. 2](#no-2)
-* [no. 3](#no-3)
-* [no. 4](#no-4)
-* [no. 5](#no-5)
-* [no. 6](#no-6)
-* [no. 7](#no-7)
-* [no. 8](#no-8)
-* [no. 9](#no-9)
-* [no. 10](#no-10)
-* [no. 11](#no-11)
-* [no. 12](#no-12)
-* [no. 13](#no-13)
+* [Pendahuluan](#pendahuluan)
+    * [Setting Topologi](#setting)
+    * [Edit Konfigurasi Network](#edit)
+* [Soal 1](#soal1)
+* [Soal 2](#soal2)
+* [Soal 3](#soal3)
+* [Soal 4](#soal4)
+* [Soal 5](#soal5)
+* [Soal 6](#soal6)
+* [Soal 7](#soal7)
+* [Soal 8](#soal8)
+* [Soal 9](#soal9)
+* [Soal 10](#soal10)
+* [Soal 11](#soal11)
+* [Soal 12](#soal12)
+* [Soal 13](#soal13)
 * [Kendala Yang Dialami](#kendala)
 * [Referensi](#referensi)
 
 
-## Pendahuluan
+## <a name="pendahuluan"></a> Pendahuluan
 
-### Setting Topologi
+### <a name="setting"></a> Setting Topologi
 
 <image src="screenshots/1.PNG" width="700">
 
-### Edit Knofigurasi Network
+### <a name="edit"></a> Edit Knofigurasi Network
 
 #### Pada Server
 <image src="screenshots/0-1.PNG" width="700">
@@ -48,7 +51,7 @@ Daanii Nabil Ghinannafsi Kusnanta | 05111940000163 |
 
 <image src="screenshots/0-5.PNG" width="700">
 
-## no. 1
+## <a name="soal1"></a> Soal 1
 
 Luffy bersama Zoro berencana membuat peta tersebut dengan kriteria EniesLobby sebagai DNS Server, Jipangu sebagai DHCP Server, Water7 sebagai Proxy Server
 
@@ -80,7 +83,7 @@ apt-get install squid -y
 Melakukan setting pada file `/etc/default/isc-dhcp-server` dengan menambahkan `eth0` pada `INTERFACES`
 <image src="screenshots/1-1.PNG" width="700">
 
-## no. 2
+## <a name="soal2"></a> Soal 2
 
 Foosha sebagai DHCP Relay
 
@@ -101,7 +104,7 @@ Kemudian edit file `/etc/default/isc-dhcp-relay` dengan menambahkan Ip Jipangu p
 
 Lalu jalankan command `service isc-dhcp-relay start`
 
-## no. 3
+## <a name="soal3"></a> Soal 3
 
 Client yang melalui Switch1 mendapatkan range IP dari [prefix IP].1.20 - [prefix IP].1.99 dan [prefix IP].1.150 - [prefix IP].1.169
 
@@ -135,7 +138,7 @@ Nyalakan `Alabasta` atau `Loguetown` dan masukkan command `ip a`
 <image src="screenshots/3-3.PNG" width="700">
 
 
-## no. 4
+## <a name="soal4"></a> Soal 4
 
 Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.30 - [prefix IP].3.50
 
@@ -165,7 +168,7 @@ Nyalakan `Skypie` atau `Tottoland` dan masukkan command `ip a`
 
 <image src="screenshots/4-2.PNG" width="700">
 
-## no. 5
+## <a name="soal5"></a> Soal 5
 
 Client mendapatkan DNS dari EniesLobby dan client dapat terhubung dengan internet melalui DNS tersebut.
 
@@ -204,7 +207,7 @@ Mengedit file `/etc/dhcp/dhcpd.conf` dengan menambahkan IP Ennieslobby pada `opt
 Mencoba melakukan `ping google.com`. Apabila bisa, artinya sudah tersambung. 
 <image src="screenshots/5-2.PNG" width="700">
 
-## no. 6
+## <a name="soal6"></a> Soal 6
 
 Lama waktu DHCP server meminjamkan alamat IP kepada Client yang melalui Switch1 selama 6 menit sedangkan pada client yang melalui Switch3 selama 12 menit. Dengan waktu maksimal yang dialokasikan untuk peminjaman alamat IP selama 120 menit.
 
@@ -242,7 +245,7 @@ Terlihat tulisan `lease-time` sesuai dengan konfigurasi pada client.
 <image src="screenshots/6-4.PNG" width="700">
 
 
-## no. 7
+## <a name="soal7"></a> Soal 7
 
 Luffy dan Zoro berencana menjadikan Skypie sebagai server untuk jual beli kapal yang dimilikinya dengan alamat IP yang tetap dengan IP [prefix IP].3.69
 
@@ -273,7 +276,7 @@ Kemudian tambahkan `hwaddress ether hwaddress ether 16:9d:2a:0f:ca:55"` pada `/e
 Lakukan restart pada client, kemudian command `ip a`
 <image src="screenshots/7-3.PNG" width="700">
 
-## no. 8
+## <a name="soal8"></a> Soal 8
 
 Loguetown digunakan sebagai client Proxy agar transaksi jual beli dapat terjamin keamanannya, juga untuk mencegah kebocoran data transaksi.
 Pada Loguetown, proxy harus bisa diakses dengan nama jualbelikapal.yyy.com dengan port yang digunakan adalah 5000
@@ -343,4 +346,32 @@ Lakukan `lynx "website terserah` pada Loguetown.
 
 Note: Halaman terkena access denied dikarenakan saat testing belum diganti waktunya dan masih terkena konfigurasi pembatasan waktu. Terlihat bahwa proxy sudah jalan dikarenakan host_name pada halaman sama dengan konfigurasi. 
 
+## <a name="soal9"></a> Soal 9
+Agar transaksi jual beli lebih aman dan pengguna website ada dua orang, proxy dipasang autentikasi user proxy dengan enkripsi MD5 dengan dua username, yaitu luffybelikapalyyy dengan password luffy_yyy dan zorobelikapalyyy dengan password zoro_yyy
+    
+### Jawab
 
+
+## <a name="soal10"></a> Soal 10
+Transaksi jual beli tidak dilakukan setiap hari, oleh karena itu akses internet dibatasi hanya dapat diakses setiap hari Senin-Kamis pukul 07.00-11.00 dan setiap hari Selasa-Jum’at pukul 17.00-03.00 keesokan harinya (sampai Sabtu pukul 03.00)
+
+### Jawab
+    
+## <a name="soal11"></a> Soal 11
+Agar transaksi bisa lebih fokus berjalan, maka dilakukan redirect website agar mudah mengingat website transaksi jual beli kapal. Setiap mengakses google.com, akan diredirect menuju super.franky.yyy.com dengan website yang sama pada soal shift modul 2. Web server super.franky.yyy.com berada pada node Skypie.
+
+### Jawab
+    
+## <a name="soal12"></a> Soal 12
+Saatnya berlayar! Luffy dan Zoro akhirnya memutuskan untuk berlayar untuk mencari harta karun di super.franky.yyy.com. Tugas pencarian dibagi menjadi dua misi, Luffy bertugas untuk mendapatkan gambar (.png, .jpg), sedangkan Zoro mendapatkan sisanya. Karena Luffy orangnya sangat teliti untuk mencari harta karun, ketika ia berhasil mendapatkan gambar, ia mendapatkan gambar dan melihatnya dengan kecepatan 10 kbps
+
+### Jawab
+    
+## <a name="soal13"></a> Soal 13
+Sedangkan, Zoro yang sangat bersemangat untuk mencari harta karun, sehingga kecepatan kapal Zoro tidak dibatasi ketika sudah mendapatkan harta yang diinginkannya.
+    
+### Jawab
+    
+## <a name="kendala"></a> Kendala yang Dialami
+
+## <a name="referensi"></a> Referensi
