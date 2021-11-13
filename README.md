@@ -29,7 +29,6 @@ Daanii Nabil Ghinannafsi Kusnanta | 05111940000163 |
 * [Soal 12](#soal12)
 * [Soal 13](#soal13)
 * [Kendala Yang Dialami](#kendala)
-* [Referensi](#referensi)
 
 
 ## <a name="pendahuluan"></a> Pendahuluan
@@ -645,3 +644,5 @@ Jalankan command `service squid restart`.
    
 ## <a name="kendala"></a> Kendala yang Dialami
    - Terkendala dalam menjawab soal 12-13 akan tetapi teratasi setelah membaca beberapa dokumentasi. 
+   - Belum terbiasa menggunakan proxy
+   - Penggabungan dengan materi modul sebelumnya
