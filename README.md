@@ -565,7 +565,7 @@ Buat file `acl-bandwidth.conf` pada folder `/etc/squid/`
 
 Kemudian, isi dengan command berikut:
 ```
-   acl download url_regex -i \. (png|jpg)$
+   acl download url_regex -i \.(png|jpg)$
    
    delay_pools 2
    
@@ -602,8 +602,46 @@ Jalankan command `service squid restart`.
 Sedangkan, Zoro yang sangat bersemangat untuk mencari harta karun, sehingga kecepatan kapal Zoro tidak dibatasi ketika sudah mendapatkan harta yang diinginkannya.
     
 ### Jawab
-    
+#### Pada Water7
+Edit file `/etc/squid/acl-bandwidth.conf`.
+```
+   acl download url_regex -i \.(png|jpg)$
+
+   auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/passwd
+
+   acl luffy proxy_auth luffybelikapald07
+   acl zoro proxy_auth zorobelikapald07
+
+   delay_pools 2
+   
+   delay_class 1 1
+   delay_parameters 1 1250/1250
+   delay_access 1 allow luffy
+   delay_access 1 deny zoro
+   delay_access 1 allow download
+   delay_access 1 deny all
+   
+   delay_class 2 1
+   delay_parameters 2 -1/-1
+   delay_access 2 allow zoro
+   delay_access 2 deny luffy
+   delay_access 2 deny all
+```
+   
+   <img src="screenshots/13-1.PNG" width="700">
+   
+Jalankan command `service squid restart`.
+
+#### Pada Loguetown
+1. Periksa apakah proxy sudah terpasang dengan command `env | grep -i proxy`
+2. Jika belum, maka proxy bisa dipasang dengan command `export http_proxy=http://192.195.2.3:5000`
+3. Jalankan perintah `lynx google.com` maka server akan diarahkan untuk menggunakan `www.super.franky.d07.com`
+4. Input username dengan `zorobelikapald07` dan password dengan `zoro_d07`
+5. user akan diarahkan ke tampilan `www.super.franky.d07.com`
+6. Masuk ke directory `public` lalu pilih directory `images`
+7. Untuk melakukan test kecepatan download Zoro, pilih salah satu file dengan format `jpg/png` > Enter > Ketik `D` pada keyboard untuk memulai proses download
+8. Untuk output kecepatan download Zoro dan hasil setelah download dapat dilihat sebagai berikut.
+   <img src="screenshots/13-2.PNG" width="700">
+   
 ## <a name="kendala"></a> Kendala yang Dialami
    - Terkendala dalam menjawab soal 12-13 akan tetapi teratasi setelah membaca beberapa dokumentasi. 
-
-## <a name="referensi"></a> Referensi
